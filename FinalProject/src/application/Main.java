@@ -20,7 +20,7 @@ public class Main extends Application {
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, GUI_WIDTH, GUI_HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         HBox hBox = new HBox(8);
         VBox[] vBoxArray = new VBox[roundNum + 1];
         for (int i = 0; i < vBoxArray.length; i++) {
