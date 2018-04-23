@@ -14,7 +14,7 @@ public class Main extends Application {
 
     // Window size
     private final int GUI_HEIGHT = 800;
-    private final int GUI_WIDTH = 1200;
+    private final int GUI_WIDTH = 1400;
 
     @Override 
     public void start(Stage primaryStage) {
