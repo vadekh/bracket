@@ -32,9 +32,17 @@ public class Main extends Application {
         // build our layout dynamically based on teamNum
         HBox hBox = new HBox(8);
         VBox[] vBoxArray = new VBox[roundNum + 1];
+        /*
+         * Given how the loop works, I had to initialize
+         * the counters before it begins. 
+         */
         //Counters used for team labeling
         int revSeedCounter = teamNum; //Highest # seed
         int seedCounter = 1; //Lowest # seed 
+        //Used for iterating through matchup array in different directions
+        int arrayCounter = 0; 
+        int revArrayCounter = 0;
+        
         for (int i = 0; i < vBoxArray.length; i++) {
             vBoxArray[i] = new VBox(8);
             for (int j = 0; j < teamNum; j++) {
@@ -53,13 +61,45 @@ public class Main extends Application {
                 	temp = new Label("Team " + (revSeedCounter));
                 	revSeedCounter--;
                 }
+           
                 TextField temp1 = new TextField();
                 temp1.setPromptText("Enter Score: ");
                 Button temp2 = new Button("Submit");
                 if (i != 0) {
                     temp2.setDisable(true);
                     temp1.setDisable(true);
-                    temp.setText("TBD");
+                    /*
+                     * This is how I got the potential winners to appear for
+                     * the second round. It is messy, but the only way I could figure it
+                     * out given how James set up the code initially.
+                     */
+                    if(i == 1) {
+                        String[] possibleWinners = new String[teamNum];
+                        int priorTeamNum = teamNum * 2;
+                        //Construct array of possible round 1 winners
+                        for (int f = 0; f < possibleWinners.length; f++) {
+                        	possibleWinners[f] = (f + 1) + "/" + priorTeamNum;
+                        	priorTeamNum--;
+                        }
+                        /*
+                         * The winner of most imbalanced matchup will face off 
+                         * against the winner of the most balanced matchup in
+                         * round 2.
+                         */
+                        //Current most imbalanced matchup
+                        if(j % 2 == 0) {
+                        	temp.setText("Team " + possibleWinners[arrayCounter]);
+                        	arrayCounter++;
+                        }
+                        //Current most balanced matchup
+                        else {
+                        	temp.setText("Team " + possibleWinners[possibleWinners.length - 1 - revArrayCounter]);
+                        	revArrayCounter++;
+                        }
+                    }
+                    else {
+                    	temp.setText("TBD");
+                    } 
                 }
                 if (i != vBoxArray.length - 1) {
                     innerHbox.getChildren().addAll(temp, temp1, temp2);
