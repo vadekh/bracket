@@ -12,21 +12,33 @@ import javafx.scene.control.TextField;
 
 public class Main extends Application {
 
+    // Window size
     private final int GUI_HEIGHT = 800;
     private final int GUI_WIDTH = 1200;
 
-    @Override public void start(Stage primaryStage) {
+    @Override 
+    public void start(Stage primaryStage) {
+        // initial starting teams
+        // this will be dynamic when we
+        // read from file
         int teamNum = 16;
+        // what round are we on
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
+
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, GUI_WIDTH, GUI_HEIGHT);
         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        
+        // build our layout dynamically based on teamNum
         HBox hBox = new HBox(8);
         VBox[] vBoxArray = new VBox[roundNum + 1];
         for (int i = 0; i < vBoxArray.length; i++) {
             vBoxArray[i] = new VBox(8);
             for (int j = 0; j < teamNum; j++) {
                 HBox innerHbox = new HBox(8);
+
+                // change this to load team name from
+                // our teams file
                 Label temp = new Label("Team " + (j + 1));
                 TextField temp1 = new TextField();
                 temp1.setPromptText("Enter Score: ");
@@ -52,6 +64,7 @@ public class Main extends Application {
         for (int i = 0; i < vBoxArray.length; i++) {
             hBox.getChildren().add(vBoxArray[i]);
         }
+        
         Scene scena = new Scene(hBox, GUI_WIDTH, GUI_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setScene(scena);
