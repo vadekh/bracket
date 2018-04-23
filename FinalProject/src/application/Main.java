@@ -32,14 +32,27 @@ public class Main extends Application {
         // build our layout dynamically based on teamNum
         HBox hBox = new HBox(8);
         VBox[] vBoxArray = new VBox[roundNum + 1];
+        //Counters used for team labeling
+        int revSeedCounter = teamNum; //Highest # seed
+        int seedCounter = 1; //Lowest # seed 
         for (int i = 0; i < vBoxArray.length; i++) {
             vBoxArray[i] = new VBox(8);
             for (int j = 0; j < teamNum; j++) {
                 HBox innerHbox = new HBox(8);
-
+                Label temp; //label for each team
+                
                 // change this to load team name from
                 // our teams file
-                Label temp = new Label("Team " + (j + 1));
+                //Check if the counter is even, if so, label as low # seed
+                if(j % 2 == 0) {
+                	temp = new Label("Team " + seedCounter);
+                	seedCounter++;
+                }
+                //Counter is odd, label as high # seed
+                else {
+                	temp = new Label("Team " + (revSeedCounter));
+                	revSeedCounter--;
+                }
                 TextField temp1 = new TextField();
                 temp1.setPromptText("Enter Score: ");
                 Button temp2 = new Button("Submit");
