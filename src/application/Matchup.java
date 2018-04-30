@@ -22,6 +22,11 @@ public class Matchup {
 		this.score2 = score2;
 	}
 	
+		@Override
+	public String toString() {
+		return this.c1.toString() + " vs " + this.c2.toString();
+	}
+	
 	Matchup(Competitor c1, Competitor c2) {
 		this.c1 = c1;
 		this.c2 = c2;
