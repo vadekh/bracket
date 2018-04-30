@@ -19,11 +19,14 @@ public class Competitor {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
 	Competitor(int seed, String name) {
 		this.seed = seed;
 		this.name = name;
 	}
-	
-	
 }
