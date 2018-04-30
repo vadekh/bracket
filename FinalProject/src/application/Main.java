@@ -1,5 +1,21 @@
+//
+// Title:           Tournament Bracket 
+// Due Date:        May 3rd, 2018
+// Files:           Main.java, Round.java, Matchup.java, Competitor.java, TeamLoader.java, application.css
+// Course:          CS 400, Spring 2018
+//
+// Authors:         A-Team 30: Brady Erdman, Alec Chan, James Kuoppala, James Ungaretti, Vade Kamenitsa-Hale
+// Email:           erdman3@wisc.edu, aechan@wisc.edu, kuoppala@wisc.edu, ungaretti@wisc.edu, kamenitsahal@wisc.edu
+// Lecturer's Name: Deb Depeller
+//
+// No known bugs
+//
+
 package application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -10,6 +26,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 
+/**
+ * This is the Main class for creating and displaying our
+ * Tournament Bracket GUI. It is responsible for reading
+ * in a list of competitors from a file and 
+ * constructing a bracket with proper seeding. The seeding 
+ * will be such that the number 1 and 2 seeds can only meet
+ * in the championship. Matchups for each round depend on
+ * initial team seeding and the winner of previous matchups. 
+ * The user chooses the winners of each matchup by entering in
+ * scores for each matchup. Teams with high scores move on. Execution
+ * continues until a winner has been chosen.
+ * The bracket scales with 2^x number of teams.
+ * 
+ * @author A-Team
+ *
+ */
 public class Main extends Application {
 
     // Window size
