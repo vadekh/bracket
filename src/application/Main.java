@@ -114,6 +114,7 @@ public class Main extends Application {
         launch(args);
     }
     
+    //better seeding algorithm
     public Object[] seed(Object[] teams)
     {
         String[][] test = new String[5][5];
