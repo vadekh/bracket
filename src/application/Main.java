@@ -15,13 +15,20 @@ public class Main extends Application {
     // Window size
     private final int GUI_HEIGHT = 800;
     private final int GUI_WIDTH = 1400;
-
+    
     @Override 
     public void start(Stage primaryStage) {
+
+        // the first cmd line argument will be the file path
+        String fileName = getParameters().getRaw().get(0);
+
+        TeamLoader teamLoader = new TeamLoader(fileName);
+
+
         // initial starting teams
         // this will be dynamic when we
         // read from file
-        int teamNum = 16;
+        int teamNum = teamLoader.getNumTeams();
         // what round are we on
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
 
@@ -53,12 +60,12 @@ public class Main extends Application {
                 // our teams file
                 //Check if the counter is even, if so, label as low # seed
                 if(j % 2 == 0) {
-                	temp = new Label("Team " + seedCounter);
+                	temp = new Label(teamLoader.getTeams()[seedCounter-1]);
                 	seedCounter++;
                 }
                 //Counter is odd, label as high # seed
                 else {
-                	temp = new Label("Team " + (revSeedCounter));
+                	temp = new Label(teamLoader.getTeams()[revSeedCounter-1]);
                 	revSeedCounter--;
                 }
            

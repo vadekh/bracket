@@ -1,8 +1,8 @@
 JXX = javac
 J = java
-OUTDIR = FinalProject/bin/
+OUTDIR = bin/
 JARGS = -d $(OUTDIR)
-SOURCES = FinalProject/src/application/Main.java
+SOURCES = src/application/Main.java src/application/TeamLoader.java
 
 all: clean setup build run
 
@@ -13,7 +13,7 @@ build:
 	$(JXX) $(JARGS) $(SOURCES)
 
 run:
-	cd FinalProject/bin; $(J) application.Main
+	cd bin/; $(J) application.Main teams.txt
 
 clean:
 	rm -f $(OUTDIR)**/*
