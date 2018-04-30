@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -15,14 +18,15 @@ public class Main extends Application {
     // Window size
     private final int GUI_HEIGHT = 800;
     private final int GUI_WIDTH = 1400;
-    
+    private static ArrayList<Competitor> initialCompetitors;
+    private static Round[] rounds;
     @Override 
     public void start(Stage primaryStage) {
 
         // the first cmd line argument will be the file path
         String fileName = getParameters().getRaw().get(0);
-
         TeamLoader teamLoader = new TeamLoader(fileName);
+        //TeamLoader teamLoader = new TeamLoader("C:\\Users\\James\\git\\bracket\\src\\teams.txt"); // for testing
 
 
         // initial starting teams
@@ -31,14 +35,14 @@ public class Main extends Application {
         int teamNum = teamLoader.getNumTeams();
         // the number of rounds
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
-
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, GUI_WIDTH, GUI_HEIGHT);
         //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         
         // build our layout dynamically based on teamNum
-        HBox hBox = new HBox(8);
-        VBox[] vBoxArray = new VBox[roundNum + 1];
+        HBox bracket = new HBox(8);
+        VBox[] rounds = new VBox[roundNum];
+        Object[] teams = seed(teamLoader.getTeams().toArray());
         /*
          * Given how the loop works, I had to initialize
          * the counters before it begins. 
@@ -50,89 +54,97 @@ public class Main extends Application {
         int arrayCounter = 0; 
         int revArrayCounter = 0;
         
-        for (int i = 0; i < vBoxArray.length; i++) {
-            vBoxArray[i] = new VBox(8);
-            for (int j = 0; j < teamNum; j++) {
-                HBox innerHbox = new HBox(8);
-                Label temp; //label for each team
-                
+        for (int i = 0; i < rounds.length; i++) {
+            rounds[i] = new VBox(20);
+            for (int j = 0; j < teamNum; j+=2) {
+                VBox matchup = new VBox(8);
+                HBox team1 = new HBox(8);
+                HBox team2 = new HBox(8);
+                Label team1Name = new Label(teams[j].toString());
+                Label team2Name = new Label(teams[j + 1].toString());
                 // change this to load team name from
                 // our teams file
                 //Check if the counter is even, if so, label as low # seed
-                if(j % 2 == 0) {
-                	temp = new Label(teamLoader.getTeams()[seedCounter-1]);
-                	seedCounter++;
-                }
-                //Counter is odd, label as high # seed
-                else {
-                	temp = new Label(teamLoader.getTeams()[revSeedCounter-1]);
-                	revSeedCounter--;
-                }
+                
            
-                TextField temp1 = new TextField();
-                temp1.setPromptText("Enter Score: ");
-                Button temp2 = new Button("Submit");
+                TextField team1Text = new TextField();
+                TextField team2Text = new TextField();
+                team1Text.setPromptText("Enter Score: ");
+                team2Text.setPromptText("Enter Score: ");
+                Button submitButton = new Button("Submit");
                 if (i != 0) {
-                    temp2.setDisable(true);
-                    temp1.setDisable(true);
+                    team1Text.setDisable(true);
+                    team2Text.setDisable(true);
+                    submitButton.setDisable(true);
+                }
                     /*
                      * This is how I got the potential winners to appear for
                      * the second round. It is messy, but the only way I could figure it
                      * out given how James set up the code initially.
                      */
-                    if(i == 1) {
-                        String[] possibleWinners = new String[teamNum];
-                        int priorTeamNum = teamNum * 2;
-                        //Construct array of possible round 1 winners
-                        for (int f = 0; f < possibleWinners.length; f++) {
-                        	possibleWinners[f] = (f + 1) + "/" + priorTeamNum;
-                        	priorTeamNum--;
-                        }
-                        /*
-                         * The winner of most imbalanced matchup will face off 
-                         * against the winner of the most balanced matchup in
-                         * round 2.
-                         */
-                        //Current most imbalanced matchup
-                        if(j % 2 == 0) {
-                        	temp.setText("Team " + possibleWinners[arrayCounter]);
-                        	arrayCounter++;
-                        }
-                        //Current most balanced matchup
-                        else {
-                        	temp.setText("Team " + possibleWinners[possibleWinners.length - 1 - revArrayCounter]);
-                        	revArrayCounter++;
-                        }
-                    }
-                    else {
-                    	temp.setText("TBD");
-                    } 
-                }
-                if (i != vBoxArray.length - 1) {
-                    innerHbox.getChildren().addAll(temp, temp1, temp2);
-                } else {
-                    innerHbox.getChildren().addAll(temp);
-                }
-                vBoxArray[i].getChildren().add(innerHbox);
-                if ((j + 1) % 2 == 0) {
-                    vBoxArray[i].getChildren().add(new Label("             "));
-                }
+                team1.getChildren().addAll(team1Name, team1Text, submitButton);
+                team2.getChildren().addAll(team2Name, team2Text);
+                matchup.getChildren().addAll(team1, team2);
+                rounds[i].getChildren().addAll(matchup);
             }
             teamNum = teamNum / 2;
         }
 
-        for (int i = 0; i < vBoxArray.length; i++) {
-            hBox.getChildren().add(vBoxArray[i]);
+        for (int i = 0; i < rounds.length; i++) {
+            bracket.getChildren().add(rounds[i]);
         }
-        
-        Scene scena = new Scene(hBox, GUI_WIDTH, GUI_HEIGHT);
+        bracket.getChildren().add(new Label("Winner: TBD"));
+        Scene scena = new Scene(bracket, GUI_WIDTH, GUI_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setScene(scena);
         primaryStage.show();
     }
 
     public static void main(String[] args) {
+        TeamLoader teamLoader = new TeamLoader("C:\\Users\\James\\git\\bracket\\src\\teams.txt");   //for testing
+        int teamNum = teamLoader.getNumTeams();
+        int roundNum = (int) (Math.log(teamNum) / Math.log(2));
+        initialCompetitors = new ArrayList<Competitor>();
+        rounds = new Round[roundNum];
+        for(int i = 0; i < teamNum; i++)
+        {
+            initialCompetitors.add(new Competitor(i, teamLoader.getTeams().get(i)));
+        }
+        rounds[0] = new Round(teamNum, initialCompetitors);
         launch(args);
     }
+    
+    public Object[] seed(Object[] teams)
+    {
+        String[][] test = new String[5][5];
+        int height = 1;
+        int length = teams.length;
+        Object[][] big = new String[length][1];
+        for(int i = 0; i < teams.length; i++)
+        {
+            big[i][0] = teams[i];
+        }
+        while(height <= teams.length - 1)
+        {
+            String[][] bigTemp = new String[big.length/2][height*2];
+            for(int i = 0; i < big.length/2; i++)
+            {
+                String[] temp = Stream.concat(Arrays.stream(big[i]), Arrays.stream(big[(big.length - 1) - i])).toArray(String[]::new);
+                bigTemp[i] = temp;
+                
+            }
+            
+            big = bigTemp;
+            height *= 2;
+        }
+        Object[] newTeam = new String[teams.length];
+        for(int i = 0; i < teams.length; i++)
+        {
+            newTeam[i] = big[0][i];
+        }
+        return newTeam;
+        
+    }
+   
 }
 

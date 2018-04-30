@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class TeamLoader {
-    private String[] teams;
+    private ArrayList<String> teams;
 
     public TeamLoader(String filePath) {
         // read file and load into memory
@@ -15,7 +15,7 @@ public class TeamLoader {
                 System.out.println(team);
             }
         } catch (IOException e) {
-            System.out.println("Error reading file.");
+            System.out.println(e.getLocalizedMessage());
         }
     }
 
@@ -32,20 +32,20 @@ public class TeamLoader {
             list.add(line);
         }
         buff.close();
-        this.teams = list.toArray(new String[list.size()]);
+        this.teams = list;
     }
 
     /**
      * Get number of teams
      */
     public int getNumTeams() {
-        return this.teams.length;
+        return this.teams.size();
     }
 
     /**
      * Get the teams
      */
-    public String[] getTeams() {
+    public ArrayList<String> getTeams() {
         return this.teams;
     }
 }
