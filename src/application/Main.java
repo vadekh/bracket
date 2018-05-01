@@ -104,18 +104,17 @@ public class Main extends Application {
                                         {
                                             roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor1(winner);
                                             ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(0)).setText(winner.getName());
+                                            submitButton.setDisable(true);
+                                            team1Text.setDisable(true);
+                                            team2Text.setDisable(true);
                                         }
                                         else
                                         {
-                                            
                                             roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor2(winner);
                                             ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(0)).setText(winner.getName());
-                                        }
-                                        if(roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c1 != null && roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c2 != null) {
-                                            // the next round is ready so enable editing the boxes and buttons
-                                            // idk how to do this james pls help
-                                            ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get()
-                                            ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get()
+                                            submitButton.setDisable(true);
+                                            team1Text.setDisable(true);
+                                            team2Text.setDisable(true);
                                         }
                                     }
                                 });
