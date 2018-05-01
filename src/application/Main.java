@@ -28,9 +28,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         // the first cmd line argument will be the file path
-//        String fileName = getParameters().getRaw().get(0);
-//        TeamLoader teamLoader = new TeamLoader(fileName);
-        TeamLoader teamLoader = new TeamLoader("C:\\Users\\James\\git\\bracket\\src\\teams.txt"); // for testing
+        String fileName = getParameters().getRaw().get(0);
+        TeamLoader teamLoader = new TeamLoader(fileName);
 
 
         // initial starting teams
@@ -141,7 +140,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        TeamLoader teamLoader = new TeamLoader("C:\\Users\\James\\git\\bracket\\src\\teams.txt");   //for testing
+        TeamLoader teamLoader = new TeamLoader(args[0]);   //for testing
         int teamNum = teamLoader.getNumTeams();
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
         initialCompetitors = new Competitor[teamNum];

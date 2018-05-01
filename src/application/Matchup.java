@@ -1,4 +1,5 @@
 package application;
+import java.util.Random;
 
 public class Matchup {
 	Competitor c1;
@@ -52,8 +53,12 @@ public class Matchup {
 		}
 		
 		else {
-			return null; //the GUI should send out an error when there is a tie, prompt the user to re-input scores
-						 //or we can just pick a random winner, whatever is easiest
+			Random rand = new Random();
+			
+			if(rand.nextInt(10)<5) return this.c1;
+
+			return this.c2;
+			
 		}
 	}
 }
