@@ -29,8 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         // the first cmd line argument will be the file path
-        String fileName = getParameters().getRaw().get(0);
-        TeamLoader teamLoader = new TeamLoader(fileName);
+        TeamLoader teamLoader = new TeamLoader("C:\\Users\\James\\git\\bracket\\src\\teams.txt");
         int teamNum = teamLoader.getNumTeams();
 
         // the number of rounds
@@ -100,28 +99,39 @@ public class Main extends Application {
                                         roundsInternal[roundIndex].getMatchups()[matchupIndex].setScore1(score1);
                                         roundsInternal[roundIndex].getMatchups()[matchupIndex].setScore2(score2);
                                         Competitor winner = roundsInternal[roundIndex].getMatchups()[matchupIndex].getWinner();
-                                        if(matchupIndex % 2 == 0)
+                                        if(roundIndex == roundNum - 1)
                                         {
-                                            roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor1(winner);
-                                            ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(0)).setText(winner.getName());
-                                            submitButton.setDisable(true);
-                                            team1Text.setDisable(true);
-                                            team2Text.setDisable(true);
-                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(0).setDisable(false);
-                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(1).setDisable(false);
-                                            
+                                            Label firstPlace = new Label(winner.getName());
+                                            Label secondPlace = new Label(team2Text.getText());
+                                            //Label thirdPlace = new Label() in progress
                                         }
                                         else
                                         {
-                                            roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor2(winner);
-                                            ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(0)).setText(winner.getName());
-                                            submitButton.setDisable(true);
-                                            team1Text.setDisable(true);
-                                            team2Text.setDisable(true);
-                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(0).setDisable(false);
-                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(1).setDisable(false);
-                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(2).setDisable(false);
+                                            if(matchupIndex % 2 == 0)
+                                            {
+                                                roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor1(winner);
+                                                ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(0)).setText(winner.getName());
+                                                ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(1).setDisable(false);
+                                                if(!(roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c1 == null || roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c2 == null))
+                                                    ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(2).setDisable(false);
+                                                submitButton.setDisable(true);
+                                                team1Text.setDisable(true);
+                                                team2Text.setDisable(true);
+                                                
+                                            }
+                                            else
+                                            {
+                                                roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor2(winner);
+                                                ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(0)).setText(winner.getName());
+                                                ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(1).setDisable(false);
+                                                if(!(roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c1 == null || roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c2 == null))
+                                                    ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(2).setDisable(false);
+                                                submitButton.setDisable(true);
+                                                team1Text.setDisable(true);
+                                                team2Text.setDisable(true);
+                                            }
                                         }
+                                        
                                     }
                                 });
                     /*
@@ -140,7 +150,6 @@ public class Main extends Application {
         for (int i = 0; i < rounds.length; i++) {
             bracket.getChildren().add(rounds[i]);
         }
-        bracket.getChildren().add(new Label("Winner: TBD"));
         Scene scena = new Scene(bracket, GUI_WIDTH, GUI_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setScene(scena);
@@ -148,7 +157,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        TeamLoader teamLoader = new TeamLoader(args[0]);   //for testing
+        TeamLoader teamLoader = new TeamLoader("C:\\Users\\James\\git\\bracket\\src\\teams.txt");   //for testing
         int teamNum = teamLoader.getNumTeams();
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
         initialCompetitors = new Competitor[teamNum];

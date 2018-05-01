@@ -6,7 +6,7 @@ public class Matchup {
 	Competitor c2;
 	int score1;
 	int score2;
-	
+	    
 	public int getScore1() {
 		return score1;
 	}

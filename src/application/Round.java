@@ -9,7 +9,7 @@ public class Round {
 	int totalTeamNumber;
 	Competitor[] roundCompetitors;
 	Matchup[] roundMatchups;
-	Competitor[] matchupWinners;
+	Competitor[] matchupWinners;  
 	
 	Round(int roundNumber, Competitor[] roundCompetitors) {
 		this.roundNumber = roundNumber;
