@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 
+
 public class Main extends Application {
 
     // Window size
@@ -30,12 +31,8 @@ public class Main extends Application {
         // the first cmd line argument will be the file path
         String fileName = getParameters().getRaw().get(0);
         TeamLoader teamLoader = new TeamLoader(fileName);
-
-
-        // initial starting teams
-        // this will be dynamic when we
-        // read from file
         int teamNum = teamLoader.getNumTeams();
+
         // the number of rounds
         int roundNum = (int) (Math.log(teamNum) / Math.log(2));
         BorderPane root = new BorderPane();
@@ -113,6 +110,12 @@ public class Main extends Application {
                                             
                                             roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].setCompetitor2(winner);
                                             ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(0)).setText(winner.getName());
+                                        }
+                                        if(roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c1 != null && roundsInternal[roundIndex + 1].getMatchups()[matchupIndex/2].c2 != null) {
+                                            // the next round is ready so enable editing the boxes and buttons
+                                            // idk how to do this james pls help
+                                            ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get()
+                                            ((Label) ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get()
                                         }
                                     }
                                 });
