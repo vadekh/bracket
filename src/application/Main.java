@@ -107,6 +107,9 @@ public class Main extends Application {
                                             submitButton.setDisable(true);
                                             team1Text.setDisable(true);
                                             team2Text.setDisable(true);
+                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(0).setDisable(false);
+                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(0)).getChildren().get(1).setDisable(false);
+                                            
                                         }
                                         else
                                         {
@@ -115,6 +118,9 @@ public class Main extends Application {
                                             submitButton.setDisable(true);
                                             team1Text.setDisable(true);
                                             team2Text.setDisable(true);
+                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(0).setDisable(false);
+                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(1).setDisable(false);
+                                            ((HBox) ((VBox) rounds[roundIndex + 1].getChildren().get(matchupIndex/2)).getChildren().get(1)).getChildren().get(2).setDisable(false);
                                         }
                                     }
                                 });
