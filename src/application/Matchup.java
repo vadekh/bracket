@@ -21,7 +21,14 @@ public class Matchup {
 	public void setScore2(int score2) {
 		this.score2 = score2;
 	}
-	
+	public void setCompetitor1(Competitor c1)
+	{
+	    this.c1 = c1;
+	}
+	public void setCompetitor2(Competitor c2)
+    {
+        this.c2 = c2;
+    }
 		@Override
 	public String toString() {
 		return this.c1.toString() + " vs " + this.c2.toString();
@@ -33,6 +40,7 @@ public class Matchup {
 		this.score1 = 0;
 		this.score2 = 0;
 	}
+	
 	
 	public Competitor getWinner() {
 		if(this.score1 > this.score2) {
