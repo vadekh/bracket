@@ -3,6 +3,7 @@ package application;
 public class Competitor {
 	private int seed;
 	private String name;
+	private int score;
 	
 	public int getSeed() {
 		return seed;
@@ -20,6 +21,16 @@ public class Competitor {
 		this.name = name;
 	}
 	
+	public void setScore(int score)
+	{
+	    this.score = score;
+	}
+	
+	public int getScore()
+	{
+	    return this.score;
+	}
+	
 	@Override
 	public String toString() {
 		return this.name;
@@ -28,5 +39,6 @@ public class Competitor {
 	Competitor(int seed, String name) {
 		this.seed = seed;
 		this.name = name;
+		this.score = 0;
 	}
 }

@@ -56,7 +56,9 @@ public class Main extends Application {
         //Used for iterating through matchup array in different directions
         int arrayCounter = 0; 
         int revArrayCounter = 0;
-        
+        Label firstPlace = new Label();
+        Label secondPlace = new Label();
+        Label thirdPlace = new Label();
         for (int i = 0; i < rounds.length; i++) {
             rounds[i] = new VBox(20);
             for (int j = 0; j < teamNum; j+=2) {
@@ -101,8 +103,22 @@ public class Main extends Application {
                                         Competitor winner = roundsInternal[roundIndex].getMatchups()[matchupIndex].getWinner();
                                         if(roundIndex == roundNum - 1)
                                         {
-                                            Label firstPlace = new Label(winner.getName());
-                                            Label secondPlace = new Label(team2Text.getText());
+                                            Competitor loser1 = roundsInternal[roundIndex - 1].getMatchups()[0].getLoser();
+                                            Competitor loser2 = roundsInternal[roundIndex - 1].getMatchups()[1].getLoser();
+                                            if(loser1.getScore() < loser2.getScore())
+                                            {
+                                                thirdPlace.setText("Third Place: " + loser2.getName());
+                                            }
+                                            else if (loser2.getScore() < loser1.getScore())
+                                            {
+                                                thirdPlace.setText("Third Place: " + loser1.getName());
+                                            }
+                                            else
+                                            {
+                                                thirdPlace.setText("Third Place: TIE between " + loser1.getName() + " and " + loser2.getName());
+                                            }
+                                            firstPlace.setText("Winner: " + winner.getName());
+                                            secondPlace.setText("Second Place: " + roundsInternal[roundIndex].getMatchups()[matchupIndex].getLoser());
                                             //Label thirdPlace = new Label() in progress
                                         }
                                         else
@@ -150,6 +166,7 @@ public class Main extends Application {
         for (int i = 0; i < rounds.length; i++) {
             bracket.getChildren().add(rounds[i]);
         }
+        bracket.getChildren().addAll(firstPlace, secondPlace, thirdPlace);
         Scene scena = new Scene(bracket, GUI_WIDTH, GUI_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setScene(scena);

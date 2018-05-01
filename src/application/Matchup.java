@@ -13,6 +13,7 @@ public class Matchup {
 
 	public void setScore1(int score1) {
 		this.score1 = score1;
+		this.c1.setScore(score1);
 	}
 
 	public int getScore2() {
@@ -21,6 +22,7 @@ public class Matchup {
 
 	public void setScore2(int score2) {
 		this.score2 = score2;
+		this.c2.setScore(score2);
 	}
 	public void setCompetitor1(Competitor c1)
 	{
@@ -53,12 +55,24 @@ public class Matchup {
 		}
 		
 		else {
-			Random rand = new Random();
-			
-			if(rand.nextInt(10)<5) return this.c1;
-
-			return this.c2;
+			return null;
 			
 		}
+	}
+	
+	public Competitor getLoser()
+	{
+	    if(this.score1 > this.score2) {
+            return this.c2;
+        }
+        
+        else if(this.score1 < this.score2) {
+            return this.c1;
+        }
+        
+        else {
+            return null;
+            
+        }
 	}
 }
