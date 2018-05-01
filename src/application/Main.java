@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,9 @@ import javafx.scene.control.Labeled;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.control.TextField;
 
 
@@ -40,6 +44,7 @@ public class Main extends Application {
         
         // build our layout dynamically based on teamNum
         HBox bracket = new HBox(8);
+        bracket.setPadding(new Insets(20, 20, 20, 20));
         VBox[] rounds = new VBox[roundNum];
         String[] teams = new String[teamNum];
         for(int i = 0; i < initialCompetitors.length; i++)
@@ -119,6 +124,12 @@ public class Main extends Application {
                                             }
                                             firstPlace.setText("Winner: " + winner.getName());
                                             secondPlace.setText("Second Place: " + roundsInternal[roundIndex].getMatchups()[matchupIndex].getLoser());
+                                            firstPlace.setFont(Font.font("Verdana", 12));
+                                            secondPlace.setFont(Font.font("Verdana", 12));
+                                            thirdPlace.setFont(Font.font("Verdana", 12));
+                                            firstPlace.setTextFill(Color.RED);
+                                            secondPlace.setTextFill(Color.RED);
+                                            thirdPlace.setTextFill(Color.RED);
                                             //Label thirdPlace = new Label() in progress
                                         }
                                         else
@@ -168,6 +179,7 @@ public class Main extends Application {
         }
         bracket.getChildren().addAll(firstPlace, secondPlace, thirdPlace);
         Scene scena = new Scene(bracket, GUI_WIDTH, GUI_HEIGHT);
+        primaryStage.setTitle("Bracket");
         primaryStage.setScene(scene);
         primaryStage.setScene(scena);
         primaryStage.show();
@@ -230,4 +242,3 @@ public class Main extends Application {
     }
    
 }
-
